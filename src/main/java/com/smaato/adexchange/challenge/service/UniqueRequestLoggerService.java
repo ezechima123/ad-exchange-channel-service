@@ -3,6 +3,7 @@ package com.smaato.adexchange.challenge.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -18,12 +19,12 @@ public class UniqueRequestLoggerService {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
-    private Map<Integer, Integer> requestMap;
+    private ConcurrentHashMap<Integer, Integer> requestMap;
 
     @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.MINUTES)
     public void reportCurrentTime() {
         log.info("The Number of unique Request at {} is {}", dateFormat.format(new Date()), requestMap.size());
         log.info("The Map Result is {}", requestMap);
-        // requestMap.clear();
+        requestMap.clear();
     }
 }
