@@ -10,32 +10,34 @@
    </parent>
    <groupId>com.smaato.adexchange</groupId>
    <artifactId>ad-exchange-channel-service</artifactId>
-   <version>0.0.1-SNAPSHOT</version>
+   <version>1.0</version>
    <name>ad-exchange-channel-service</name>
-   <description>Demo project for Spring Boot</description>
+   <description>This API exposes a GET endpoint to manage deduplication and Logging to Streams</description>
    <properties>
       <java.version>8</java.version>
       <spring-cloud.version>2021.0.6</spring-cloud.version>
    </properties>
    <dependencies>
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-actuator</artifactId>
-      </dependency>
-      <dependency>
+   <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-web</artifactId>
       </dependency>
       <dependency>
          <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter</artifactId>
+         <exclusions>
+            <exclusion>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-starter-logging</artifactId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-devtools</artifactId>
          <scope>runtime</scope>
          <optional>true</optional>
-      </dependency>
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-test</artifactId>
-         <scope>test</scope>
       </dependency>
       <dependency>
          <groupId>org.awaitility</groupId>
@@ -61,24 +63,37 @@
          <artifactId>springdoc-openapi-ui</artifactId>
          <version>1.6.13</version>
       </dependency>
-
       <dependency>
-	     <groupId>org.springframework.boot</groupId>
-	     <artifactId>spring-boot-starter-cache</artifactId>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-cache</artifactId>
       </dependency>
-
       <dependency>
-	    <groupId>org.springframework.boot</groupId>
-	   <artifactId>spring-boot-starter-data-redis</artifactId>
-     </dependency>
-	 
-     <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-data-redis</artifactId>
+      </dependency>
+      <dependency>
          <groupId>org.redisson</groupId>
          <artifactId>redisson-spring-boot-starter</artifactId>
          <version>3.20.0</version>
-     </dependency>
-
-
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-log4j2</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.kafka</groupId>
+         <artifactId>kafka-log4j-appender</artifactId>
+         <version>1.0.0</version>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-actuator</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-test</artifactId>
+         <scope>test</scope>
+      </dependency>
    </dependencies>
    <build>
       <plugins>

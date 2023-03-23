@@ -1,0 +1,19 @@
+2023-03-23 10:28:08,981 INFO c.s.a.c.App [restartedMain] Starting App using Java 1.8.0_321 on DESKTOP-9L9KDRC with PID 2596 (C:\Users\Owner\Documents\NetBeansProjects\ad-exchange-channel-service\target\classes started by Owner in C:\Users\Owner\Documents\NetBeansProjects\ad-exchange-channel-service)
+2023-03-23 10:28:09,205 DEBUG c.s.a.c.App [restartedMain] Running with Spring Boot v2.7.9, Spring v5.3.25
+2023-03-23 10:28:09,213 INFO c.s.a.c.App [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-03-23 10:28:13,270 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-23 10:28:13,331 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-23 10:28:13,425 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
+2023-03-23 10:28:31,222 INFO c.s.a.c.App [restartedMain] Started App in 23.117 seconds (JVM running for 24.852)
+2023-03-23 10:28:31,305 INFO c.s.a.c.s.UniqueRequestLoggerService [scheduling-1] The Number of unique Request at 10:28:31 is 0
+2023-03-23 10:28:32,172 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+2023-03-23 10:28:32,191 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 3 ms
+2023-03-23 10:29:31,318 INFO c.s.a.c.s.UniqueRequestLoggerService [scheduling-1] The Number of unique Request at 10:29:31 is 0
+2023-03-23 10:30:04,635 INFO c.s.a.c.App [restartedMain] Starting App using Java 1.8.0_321 on DESKTOP-9L9KDRC with PID 2596 (C:\Users\Owner\Documents\NetBeansProjects\ad-exchange-channel-service\target\classes started by Owner in C:\Users\Owner\Documents\NetBeansProjects\ad-exchange-channel-service)
+2023-03-23 10:30:04,641 DEBUG c.s.a.c.App [restartedMain] Running with Spring Boot v2.7.9, Spring v5.3.25
+2023-03-23 10:30:04,642 INFO c.s.a.c.App [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-03-23 10:30:05,580 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-23 10:30:05,590 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-23 10:30:05,606 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2023-03-23 10:30:07,799 INFO c.s.a.c.App [restartedMain] Started App in 3.23 seconds (JVM running for 121.429)
+2023-03-23 10:30:07,826 INFO c.s.a.c.s.UniqueRequestLoggerService [scheduling-1] The Number of unique Request at 10:30:07 is 0
