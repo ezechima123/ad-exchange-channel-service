@@ -1,4 +1,4 @@
-# Solution Overview
+# Solution Overview and Requirement definitions
 This document serves as a high-level description of our API Design Guidelines and imlementation approach for the technical challenge at Smaato
 
 
@@ -7,7 +7,7 @@ The following are the proposed list of functional requirement to be implemented 
 
 1. The service has one GET endpoint - /api/smaato/accept which is able to accept an integer id as a mandatory query parameter and an optional string HTTP endpoint query parameter. It should return String “ok” if there were no errors processing the request and “failed” in case of any errors.
 2. Every minute, the application should write the count of unique requests your application received in that minute to a log file - please use a standard logger. Uniqueness of request is based on the id parameter provided.
-3. When the endpoint is provided, the service should fire an HTTP GET request to the provided endpoint with count of unique requests in the current minute as a query parameter. Also log the HTTP status code of the response.scenarios in line with the SOLID principle and separation of concerns.
+3. When the endpoint is provided, the service should fire an HTTP GET request to the provided endpoint with count of unique requests in the current minute as a query parameter. 
 4. Instead of firing an HTTP GET request to the endpoint, fire a POST request. The data structure of the content can be freely decided.  
 5. Instead of writing the count of unique received ids to a log file, send the count of unique received ids to a distributed streaming service of your choice. 
 
@@ -17,10 +17,26 @@ The following are the proposed list of Non-functional requirement to be implemen
 1. Ability to process 10K requests per Second
 2. Implement deduplication to avoid duplication
 3. Implement Tracing - observability
+4. High Availbility
 
 
+# Capacity Estimation and Asumptions
+We have to determine the capacity estimation so as to know the type of  bandwith and memory we can allocate for the system architecture.Since the Query will be integer and String Endpoint, We assume the maximum value of Integer(2147483647) or 4bytes and 1000 length for the endpoint url at 2bytes for a character which gives us 2000bytes.
+We can estimate total byte to be 2100 byte and at 10k request gives us 21MB. I will go for bandwith 30- 50 MBPS
 
 
+# System interface definition
+Based on the assignment, the api needs a mandatory Integer and optional endpoint and should return a string of "ok" or "failed" based on the execution and http GET method
+```bash
+processId(Integer id, Optional<String> endpoint);
+
+http://127.0.0.1:8080/api/smaato/accept?id=102772&endpoint=http://localhost:8080/api/v1/ping
+http://127.0.0.1:8080/api/smaato/accept?id=402772
+```
+
+
+# High-level design
+This section explains the architecture of the design
 
 <img src="images/hld1.jpg"
      alt="Solution Architecture"
@@ -29,61 +45,50 @@ The following are the proposed list of Non-functional requirement to be implemen
 Once the alarm is triggered, it send the message to the Lambda through the SNS Topic, which now uses the AWS SDK v2 to Fetch the TaskDefinition object, modified the CPU and Memory,update the Service with the New task which will then create a new version.
 
 
-## Build and Deployment
+## Deployment
 
-For the Source to build, it requires the following Software requirments as well as AWS ACCESS AND SECRET KEYS. Also ensure the Environmental variables are set and their HOME defined on their PATHs.
+For the Source to build and deployed successfully, it requires the following Software requirments
 
 * [Java SE Development Kit 8 installed](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Maven](https://maven.apache.org/install.html)
-* [TerraForm installed](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform)
+* [Docker](https://www.docker.com/)
 
 
-Firstly,from the command prompt/Terminal clone the repository with git command or download (directly from Github) the project  into a directory and change directory
+
+Firstly,you have to download project with GIT then run docker compose to starup Kafka,Zookeper and Redis
 ```bash
-git clone https://github.com/ezechima123/aws-ecs-vertical-autoscaling-task.git
+git clone https://github.com/ezechima123/ad-exchange-channel-service.git
+cd ad-exchange-channel-service
 
-cd aws-ecs-vertical-autoscaling-task
+To Start Docker 
+docker-compose up -d 
+
+To Stop docker
+docker-compose stop
 ```
 
-
-Secondly,I have to use `maven` to install our dependencies and package our application into a JAR (ecs-vertical-autoscale-lambda-1.0.0-SNAPSHOT.jar) file:
+We can then run the application with `maven`  or directly with the jar file
 ```bash
-mvn clean verify package
+mvn spring-boot:run
 
-This will create the jar file on the target folder
+java -jar target/ad-exchange-channel-service-1.0.jar
 ```
 
-Thirdly, I set the AWS Access Keys on my Windows Environment PATH as shown below as the Terramform builds is dependent on it:
+This endpoint can be tested with query parameters either from browser or postman:
 ```bash
-WINDOWS 
-set AWS_ACCESS_KEY_ID=your_access_key_id
-set AWS_SECRET_ACCESS_KEY=your_secret_access_key
-set AWS_REGION=your_aws_region
-
-UNIX/LINUX
-export AWS_ACCESS_KEY_ID=your_access_key_id
-export AWS_SECRET_ACCESS_KEY=your_secret_access_key
-export AWS_REGION=your_aws_region
+http://127.0.0.1:8080/api/smaato/accept?id=102772&endpoint=http://localhost:8080/api/v1/ping
+http://127.0.0.1:8080/api/smaato/accept?id=402772
 ```
 
-Fourthly, I ran the Terraform builds to create the Resources(Cluster,Task,Services) as shown below:
-```bash
-cd terraform
-terraform init
-terraform plan
-terraform validate
-terraform apply --auto-approve
-```
-If all goes well, the resources will be created on your AWS
 
 
 ## Further Enhancements
 The following are other enhancements that can be done on the system to improve the production ability of the process:
 
-1. Creating a DeploymentScript or a Ci/Cd pipeline to automating the whole process
-2. Improving the CPU-Memory selection algorithm to avoid Invalid CPU or memory value specified error
-3. Creating two different Lambda Handlers (CpuUtilizationHandler and MemoryUtilizationHandler) to handle different scenarios in line with the SOLID principle and separation of concerns.
-4. Enhance the Terraform scripts and add resources for Cloudwatch Alam/Sns Topics 
-5. Enhance the Terraform scripts and add resources for upload Lambda Jar file to AWS and Setup
+1. Implementation of circuit breaker pattern for the endpoint service
+2. Implemementing the ELK (Elastic Search,LogStash and Kibana) stack on Log management and monitoring with Kafka
+3. Cache can be added for to improve performance 
+4. The deployment can be done on kubernetes/ECS Cloud for more performance,availability and scalabilty
+
 
 

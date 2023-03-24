@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.smaato.adexchange.challenge.AdExchangeControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.279 s - in com.smaato.adexchange.challenge.AdExchangeControllerTest
