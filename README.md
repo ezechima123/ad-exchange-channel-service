@@ -68,10 +68,8 @@ To Stop docker
 docker-compose stop
 ```
 
-We can then run the application with `maven`  or directly with the jar file
+We can then run the application  directly with the jar file
 ```bash
-mvn spring-boot:run
-
 java -jar target/ad-exchange-channel-service-1.0.jar
 ```
 
