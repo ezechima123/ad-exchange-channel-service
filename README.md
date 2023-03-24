@@ -21,8 +21,8 @@ The following are the proposed list of Non-functional requirement to be implemen
 
 
 # Capacity Estimation and Asumptions
-We have to determine the capacity estimation so as to know the type of  bandwith and memory we can allocate for the system architecture.Since the Query will be integer and String Endpoint, We assume the maximum value of Integer(2147483647) or 4bytes and 1000 length for the endpoint url at 2bytes for a character which gives us 2000bytes.
-We can estimate total byte to be 2100 byte and at 10k request gives us 21MB. I will go for bandwith 30- 50 MBPS
+I have to determine the capacity estimation so as to know the type of  bandwith and memory I can allocate for the system architecture and also to know what is needed when i want to scale the system. Also,Since the Query will be integer and String Endpoint, I assumed the maximum value of Integer(2147483647) or 4bytes and 1000 length for the endpoint url at 2bytes for a character which gives us 2000bytes.
+therefore, i  estimated total byte to be 2100 byte and at 10k request gives us 21MB. I will go for bandwith 30-50 MBPS
 
 
 # System interface definition
@@ -33,6 +33,7 @@ processId(Integer id, Optional<String> endpoint);
 http://127.0.0.1:8080/api/smaato/accept?id=102772&endpoint=http://localhost:8080/api/v1/ping
 http://127.0.0.1:8080/api/smaato/accept?id=402772
 ```
+Secondly, there is a also a timer service that runs every minute printing the distinct values of a concurrent map.
 
 
 # High-level design
@@ -42,10 +43,10 @@ This section explains the architecture of the design
      alt="Solution Architecture"
      style="float: left; margin-right: 10px;" />
 
-Once the alarm is triggered, it send the message to the Lambda through the SNS Topic, which now uses the AWS SDK v2 to Fetch the TaskDefinition object, modified the CPU and Memory,update the Service with the New task which will then create a new version.
+In the design, I introduce kafka as our streaming platform for log which also logs on a file and console and can be edited from the log4j2.xml as we used log4j logger.
 
 
-## Deployment
+## Deployment and Testing
 
 For the Source to build and deployed successfully, it requires the following Software requirments
 
@@ -80,6 +81,13 @@ http://127.0.0.1:8080/api/smaato/accept?id=102772&endpoint=http://localhost:8080
 http://127.0.0.1:8080/api/smaato/accept?id=402772
 ```
 
+
+## Design considerations
+The following are other enhancements that can be done on the system to improve the production ability of the process:
+
+1. I used kafka as its on of the best matured platform in terms of logging and can easily integrate with ElasticSearch and Kibana.
+2. I used SpringBoot framework to develop the service for ease of support and large community and following
+3. I also use Redis for distributed lock which can also be extended for cache 
 
 
 ## Further Enhancements
