@@ -2,13 +2,20 @@
 <Configuration status="DEBUG">
     <Appenders>
         <Console name="LogToConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="[%X{transactionId}] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <File name="LogToFile" fileName="logs/app.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
         </File>
+        <Kafka name="LogToKafka" topic="smaato-topic-log">
+            <PatternLayout pattern="%date %message"/>
+            <Property name="bootstrap.servers">localhost:29092</Property>
+        </Kafka>
+        <Async name="Async">
+            <AppenderRef ref="LogToKafka"/>
+        </Async>
     </Appenders>
     <Loggers>
         <Logger name="com.smaato" level="debug" additivity="false">
@@ -22,6 +29,7 @@
         <Root level="info">
             <AppenderRef ref="LogToFile"/>
             <AppenderRef ref="LogToConsole"/>
+             <AppenderRef ref="LogToKafka"/>
         </Root>
     </Loggers>
 </Configuration>

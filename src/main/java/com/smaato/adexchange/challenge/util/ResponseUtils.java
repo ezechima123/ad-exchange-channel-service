@@ -11,6 +11,8 @@ public class ResponseUtils {
                 return new ResponseEntity<>("failed", HttpStatus.CONFLICT);
             case "ok":
                 return new ResponseEntity<>("ok", HttpStatus.OK);
+            case "servererror":
+                return new ResponseEntity<>("failed", HttpStatus.INTERNAL_SERVER_ERROR);
             default:
                 return new ResponseEntity<>("failed", HttpStatus.BAD_REQUEST);
         }

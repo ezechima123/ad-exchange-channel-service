@@ -5,6 +5,8 @@ target/
 !**/src/test/**/target/
 my**
 .mvn
+logs/
+app.log
 
 ### STS ###
 .apt_generated

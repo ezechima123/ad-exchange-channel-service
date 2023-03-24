@@ -30,17 +30,18 @@ public class AdExchangeController {
     private static final Logger log = LogManager.getLogger(AdExchangeController.class);
 
     @GetMapping("/smaato/accept")
-    @Operation(summary = "Handle Operation by Id and Optional Endpoint", description = "Return ok or failed values depending on the operation")
+    @Operation(summary = "Process with Mandatory Id and Optional Endpoint", description = "Return ok or failed values depending on the operation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
             @ApiResponse(responseCode = "409", description = "Duplicate Id supplied", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid/No Parameters Supplied", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content) })
 
     public ResponseEntity<String> processId(
             @Parameter(description = "Request Id") @RequestParam(value = "id", required = true) Integer id,
-            @Parameter(description = "Optional Http Endpoint") @RequestParam(value = "endpoint") Optional<String> endpoint) {
+            @Parameter(description = "Optional Endpoint") @RequestParam(value = "endpoint") Optional<String> endpoint) {
 
-        log.debug("Query  with Id {} and Endpoint {} parameters received from client", id, endpoint);
+        log.debug("Incoming Request  with Id {} and Endpoint {} parameters received from client", id, endpoint);
 
         return ResponseUtils.getResponse(adExchangeService.handleOperation(id, endpoint));
     }
